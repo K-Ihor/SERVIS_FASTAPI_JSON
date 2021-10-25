@@ -27,7 +27,7 @@ def standardization_phone_number(num1: str) -> str:
 
 @app.post("/unify_phone_from_json")
 def process_page(data: dict = Body(...)):
-    input_phone = data["userphone"]
+    input_phone = data["phone"]
     response = standardization_phone_number(input_phone)      
     return HTMLResponse(content=response, status_code=200)
 
