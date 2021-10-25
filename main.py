@@ -1,5 +1,5 @@
 import re
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, Form
 from fastapi.responses import HTMLResponse
 
 
@@ -32,3 +32,9 @@ def process_page(data: dict = Body(...)):
     return HTMLResponse(content=response, status_code=200)
 
 
+@app.post("/unify_phone_from_form")
+def data_form(phone: str = Form(...)):
+    user_phone = phone
+    response = standardization_phone_number(user_phone)
+    return HTMLResponse(content=response, status_code=200)
+    
