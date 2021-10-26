@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 from fastapi import FastAPI, Body, Form
 from fastapi.responses import HTMLResponse
 
@@ -36,5 +37,19 @@ def process_page(data: dict = Body(...)):
 def data_form(phone: str = Form(...)):
     user_phone = phone
     response = standardization_phone_number(user_phone)
+    return HTMLResponse(content=response, status_code=200)
+    
+
+# @app.get("/unify_phone_from_query")
+# def form_query():
+#     pass
+
+
+@app.get("/unify_phone_from_query/{item_id}")
+async def form_query(item_id: str, q: Optional[str] = None):
+    if q:
+        return {"item_id": item_id, "q": q}
+    dct = {"item_id": item_id}
+    response = standardization_phone_number(dct["item_id"])
     return HTMLResponse(content=response, status_code=200)
     
