@@ -1,6 +1,6 @@
 import re
 from typing import Optional
-from fastapi import FastAPI, Body, Form
+from fastapi import FastAPI, Body, Form, Cookie
 from fastapi.responses import HTMLResponse
 
 
@@ -42,6 +42,13 @@ def data_form(phone: str = Form(...)):
 
 @app.get("/unify_phone_from_query/")
 async def read_user_item(phone: str):
+    item = {"phone": phone}
+    response = standardization_phone_number(item["phone"])
+    return HTMLResponse(content=response, status_code=200)
+
+
+@app.get("/unify_phone_from_cookies/")
+async def read_items(phone: Optional[str] = Cookie(None)):
     item = {"phone": phone}
     response = standardization_phone_number(item["phone"])
     return HTMLResponse(content=response, status_code=200)
