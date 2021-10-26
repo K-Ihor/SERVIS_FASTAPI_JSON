@@ -47,8 +47,9 @@ async def read_user_item(phone: str):
     return HTMLResponse(content=response, status_code=200)
 
 
-@app.get("/unify_phone_from_cookies/")
+@app.get("/unify_phone_from_cookies")
 async def read_items(phone: Optional[str] = Cookie(None)):
+    print(phone)
     item = {"phone": phone}
     response = standardization_phone_number(item["phone"])
     return HTMLResponse(content=response, status_code=200)
